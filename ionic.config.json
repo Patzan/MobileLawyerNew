@@ -1,0 +1,7 @@
+{
+  "name": "NGCS.MobileLawyerN.App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
