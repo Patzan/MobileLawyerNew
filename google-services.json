@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "956218748085",
+    "firebase_url": "https://notificationpoc-1189.firebaseio.com",
+    "project_id": "notificationpoc-1189",
+    "storage_bucket": "notificationpoc-1189.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956218748085:android:460699da7a9522a9",
+        "android_client_info": {
+          "package_name": "il.gov.court.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956218748085-jg0a7rtt6pl964si0nb3seu3gh2id9ve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZNLe0rGubWBn6gKdOtX5l0mS6ap5Lrfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956218748085-jg0a7rtt6pl964si0nb3seu3gh2id9ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956218748085:android:869ca0a18eb72374fa22fc",
+        "android_client_info": {
+          "package_name": "il.gov.court.publicmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956218748085-jg0a7rtt6pl964si0nb3seu3gh2id9ve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZNLe0rGubWBn6gKdOtX5l0mS6ap5Lrfg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956218748085-jg0a7rtt6pl964si0nb3seu3gh2id9ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

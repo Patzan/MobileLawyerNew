@@ -1,0 +1,354 @@
+// Login Page Styles - Exact Copy of Original Design
+
+.contentBackground {
+    --background: #e8e8e8; // Light gray background exactly like original
+    
+    .background {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px; // Simple padding, margin will handle status bar
+    }
+  }
+  
+  // Login form card - Adaptive width with top margin
+  .formposition {
+    width: calc(100% - 40px); // Full width minus margins
+    max-width: none; // Remove max-width constraint
+    min-width: 280px; // Minimum width for small screens
+    margin: 60px auto 0; // Add top margin to avoid status bar
+    background: #5B9BD5; // Exact blue color from original screenshot
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    ion-card-header {
+      text-align: center;
+      padding: 16px 16px 12px;
+      background: #5B9BD5; // Same blue
+      
+      .login-title {
+        font-size: 16px;
+        font-weight: normal;
+        color: white;
+        margin: 0;
+        direction: rtl;
+        text-align: center;
+      }
+    }
+    
+    ion-card-content {
+      padding: 12px 16px 16px;
+      background: #5B9BD5; // Same blue background
+      
+      ion-list {
+        background: transparent;
+        padding: 0;
+        
+        ion-item {
+          --background: #B8D4F0; // Light blue background like original input fields
+          --border-color: transparent;
+          --border-width: 0;
+          --padding-start: 12px;
+          --padding-end: 12px;
+          --inner-padding-end: 12px;
+          margin-bottom: 8px;
+          border-radius: 2px;
+          min-height: 40px;
+          
+          &:last-of-type {
+            margin-bottom: 12px;
+          }
+          
+          ion-input {
+            --placeholder-color: rgba(0, 0, 0, 0.5);
+            --color: #333;
+            font-size: 14px;
+            direction: rtl;
+            text-align: right;
+            
+            &::placeholder {
+              text-align: right;
+              direction: rtl;
+              font-size: 14px;
+            }
+          }
+          
+          // Password toggle icon - Dark gray like original
+          .icon-toggleshow {
+            color: #666;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 8px;
+          }
+        }
+      }
+    }
+  }
+  
+  // Information text - White text on blue background exactly like original
+  .info-text {
+    margin: 12px 0 16px;
+    
+    p {
+      font-size: 12px;
+      line-height: 1.3;
+      direction: rtl;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      color: white; // White text on blue background like original
+    }
+  }
+  
+  // Login button - Dark blue/gray button like original
+  ion-button[type="submit"] {
+    --border-radius: 2px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: normal;
+    height: 36px;
+    
+    // Button style - darker blue like original
+    &:not([disabled]) {
+      --background: #4A7BA7; // Darker blue for button like original
+      --color: white;
+      --border-color: #4A7BA7;
+    }
+    
+    &[disabled] {
+      --background: rgba(74, 123, 167, 0.6);
+      --color: rgba(255, 255, 255, 0.7);
+      --border-color: rgba(74, 123, 167, 0.6);
+    }
+  }
+  
+  // Error messages - on blue background
+  .error-messages {
+    margin: 8px 0;
+    
+    .alert {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+      padding: 8px;
+      margin: 8px 0;
+      font-size: 12px;
+      line-height: 1.3;
+      direction: rtl;
+      text-align: center;
+      color: white;
+    }
+  }
+  
+  // Remove extra styling
+  ion-item {
+    &.ion-invalid.ion-touched,
+    &.ion-valid {
+      --border-color: transparent;
+    }
+  }
+  
+  // Responsive - Better mobile adaptation with top margin
+  @media (max-width: 480px) {
+    .contentBackground .background {
+      padding: 10px; // Simple padding for mobile
+    }
+    
+    .formposition {
+      width: calc(100% - 20px); // Even less margins on small screens
+      min-width: 260px;
+      margin-top: 50px; // Slightly less top margin on mobile
+    }
+  }
+  
+  // Landscape orientation with smaller top margin
+  @media (orientation: landscape) {
+    .formposition {
+      margin-top: 30px; // Less top margin in landscape
+    }
+  }
+  
+  // IMPROVED Dark mode support - More contrast and readable
+  @media (prefers-color-scheme: dark) {
+    .contentBackground {
+      --background: #1a1a1a; // Darker background for better contrast
+      
+      .background {
+        padding: 20px; // Simple padding for dark mode too
+      }
+    }
+    
+    .formposition {
+      width: calc(100% - 40px); // Same adaptive width
+      max-width: none;
+      margin: 60px auto 0; // Same top margin for dark mode
+      background: #2E5F8A; // Darker blue but still visible
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4); // Stronger shadow for depth
+      
+      ion-card-header {
+        background: #2E5F8A; // Match card background
+        
+        .login-title {
+          color: #E8F4FD; // Light blue-white for better readability
+          font-weight: 500; // Slightly bolder for dark mode
+        }
+      }
+      
+      ion-card-content {
+        background: #2E5F8A; // Match card background
+        
+        ion-list {
+          ion-item {
+            --background: #7BB3E8; // Brighter blue for input fields in dark mode
+            background: #7BB3E8; // Force the background
+            
+            ion-input {
+              --placeholder-color: rgba(0, 0, 0, 0.7); // Darker placeholder for contrast
+              --color: #1a1a1a; // Dark text on bright blue background
+            }
+            
+            .icon-toggleshow {
+              color: #333; // Darker icon for better contrast on bright background
+            }
+          }
+        }
+      }
+      
+      .info-text p {
+        color: #E8F4FD; // Light blue-white text for better readability
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); // Text shadow for depth
+      }
+      
+      .error-messages .alert {
+        background: rgba(255, 107, 107, 0.2); // Red-tinted error background
+        border: 1px solid rgba(255, 107, 107, 0.4);
+        color: #FFB3B3; // Light red text for errors
+      }
+    }
+    
+    // Button improvements for dark mode
+    ion-button[type="submit"] {
+      &:not([disabled]) {
+        --background: #1C3D5A; // Even darker blue for button
+        --color: #E8F4FD; // Light text
+        --border-color: #1C3D5A;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); // Add shadow for depth
+      }
+      
+      &[disabled] {
+        --background: rgba(28, 61, 90, 0.5);
+        --color: rgba(232, 244, 253, 0.6);
+        --border-color: rgba(28, 61, 90, 0.5);
+      }
+    }
+  }
+  
+  // Form validation styles
+  ion-item {
+    &.ion-invalid.ion-touched {
+      --border-color: var(--ion-color-danger);
+      
+      ion-input {
+        --color: var(--ion-color-danger);
+      }
+    }
+    
+    &.ion-valid {
+      --border-color: var(--ion-color-success);
+    }
+  }
+  
+  // RTL specific styles
+  [dir="rtl"] {
+    .formposition {
+      ion-card-content {
+        ion-list {
+          ion-item {
+            ion-input {
+              text-align: right;
+            }
+            
+            .icon-toggleshow {
+              margin-left: 0;
+              margin-right: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Responsive design
+  @media (max-width: 480px) {
+    .contentBackground {
+      .background {
+        padding: 10px;
+      }
+    }
+    
+    .formposition {
+      margin: 0;
+      border-radius: 12px;
+      
+      ion-card-header {
+        .login-title {
+          font-size: 20px;
+        }
+      }
+      
+      ion-card-content {
+        padding: 0 16px 20px;
+      }
+    }
+  }
+  
+  // Dark mode support
+  @media (prefers-color-scheme: dark) {
+    .formposition {
+      background: rgba(40, 40, 40, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      
+      ion-card-header {
+        .login-title {
+          color: var(--ion-color-light);
+        }
+      }
+      
+      ion-list {
+        ion-item {
+          background: rgba(60, 60, 60, 0.8);
+          --border-color: rgba(255, 255, 255, 0.1);
+          
+          ion-input {
+            --color: var(--ion-color-light);
+            --placeholder-color: rgba(255, 255, 255, 0.6);
+          }
+        }
+      }
+      
+      .info-text p {
+        background: transparent;
+        color: var(--ion-color-light);
+      }
+    }
+  }
+  
+  // Animation for smooth transitions
+  .formposition {
+    animation: slideInUp 0.5s ease-out;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

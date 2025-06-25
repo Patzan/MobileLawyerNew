@@ -21,8 +21,11 @@ log.txt
 /.ionic
 /www
 /platforms
+/android
+/ios
 /plugins
 
+#
 # Compiled output
 /dist
 /tmp

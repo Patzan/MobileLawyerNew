@@ -1,0 +1,105 @@
+<ion-content class="contentBackground">
+  <div class="background">
+    <ion-card class="formposition">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <ion-card-header>
+          <ion-card-title class="login-title">
+            התחברות לאפליקציה
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list lines="none">
+            <!-- Username input -->
+            <ion-item>
+              <ion-input
+                formControlName="username"
+                placeholder="שם משתמש"
+                type="text"
+                autocomplete="username"
+                dir="rtl"
+              >
+              </ion-input>
+            </ion-item>
+
+            <!-- Password input -->
+            <ion-item>
+              <ion-input
+                formControlName="password"
+                placeholder="סיסמה"
+                [type]="passwordInputType"
+                autocomplete="current-password"
+                dir="rtl"
+              >
+              </ion-input>
+
+              <!-- Password toggle icon -->
+              <ion-icon
+                [name]="passwordToggleIcon"
+                class="icon-toggleshow"
+                slot="end"
+                (click)="togglePasswordVisibility()"
+              >
+              </ion-icon>
+            </ion-item>
+
+            <!-- Error messages -->
+            <div class="error-messages">
+              <!-- Incorrect password alert -->
+              <ion-text color="danger" *ngIf="incorrectPasswordAlert()">
+                <p class="alert">
+                  אחד או יותר מהפרטים שהוזנו שגוי. שים לב, על מנת להשתמש
+                  ביישומון יש לבצע רישום באתר נט המשפט
+                </p>
+              </ion-text>
+
+              <!-- Server error alert -->
+              <ion-text color="danger" *ngIf="serverAccessErrorAlert()">
+                <p class="alert">
+                  {{ serverAccessErrorDetails() || 'שגיאה בגישה לשרת. נסה שוב
+                  מאוחר יותר.' }}
+                </p>
+              </ion-text>
+            </div>
+
+            <!-- Information text -->
+            <div class="info-text">
+              <ion-text color="medium">
+                <p>
+                  היישומון מיועד לעורכי דין בעלי כרטיס חכם. על מנת להשתמש בו יש
+                  לבצע רישום באתר נט המשפט
+                </p>
+              </ion-text>
+            </div>
+
+            <!-- Login button -->
+            <ion-button
+              type="submit"
+              expand="block"
+              fill="outline"
+              color="light"
+              [disabled]="!isFormValid || isLoading()"
+            >
+              <!-- Loading spinner -->
+              <ion-spinner
+                *ngIf="isLoading()"
+                name="crescent"
+                color="light"
+              ></ion-spinner>
+
+              <!-- Button text -->
+              <span *ngIf="!isLoading()">כניסה</span>
+              <span *ngIf="isLoading()">מתחבר...</span>
+            </ion-button>
+
+            <!-- DEBUG: API Test Button (remove in production) 
+            <ion-button fill="clear" size="small" (click)="testApi()">
+              Test API
+            </ion-button>
+            -->
+          </ion-list>
+        </ion-card-content>
+      </form>
+    </ion-card>
+  </div>
+</ion-content>

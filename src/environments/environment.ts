@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'http://bamadevws112/NGCS.Mobile.Web/',
+  appVersion: '2.7.2-DEV',
+  compatibleServerVersion: 4,
+  gcmSenderID: '956218748085',
 };
 
 /*
