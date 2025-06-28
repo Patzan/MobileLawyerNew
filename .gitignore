@@ -21,7 +21,19 @@ log.txt
 /.ionic
 /www
 /platforms
-/android
+/android/
+/android/app/*
+/android/app/src/*
+/android/app/src/main/*
+
+!/android/
+!/android/app/
+!/android/app/src/
+!/android/app/src/main/
+!/android/app/src/main/AndroidManifest.xml
+
+
+
 /ios
 /plugins
 

@@ -202,19 +202,6 @@ export class LoginPage implements OnInit {
     }
   }
 
-  // ВРЕМЕННЫЙ метод для тестирования API
-  async testApi(): Promise<void> {
-    try {
-      this.logService.info('Starting API connectivity test...');
-      await this.apiTestService.testDirectFetch(); // Добавить эту строку
-      //await this.apiTestService.testApiConnectivity();
-      //await this.apiTestService.testRequestFormats();
-      this.logService.info('API test completed successfully');
-    } catch (error) {
-      this.logService.error(error, 'API test failed');
-    }
-  }
-
   /**
    * Handle form submission
    */
