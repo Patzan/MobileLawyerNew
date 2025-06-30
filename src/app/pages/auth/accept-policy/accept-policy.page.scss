@@ -1,0 +1,174 @@
+// AcceptUserPolicy Page Styles (after moving global styles to global.scss)
+
+// Page-specific styles only - global header/content styles moved to global.scss
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 200px;
+
+  ion-spinner {
+    margin-bottom: 1rem;
+    --color: #337ab7;
+    transform: scale(1.2);
+  }
+
+  .loading-text {
+    color: #337ab7;
+    font-size: 1rem;
+    direction: rtl;
+  }
+}
+
+// Privacy Policy Image
+.policy-image-container {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+
+  .policy-image {
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+// Acceptance Row (matches old col-8 + col-3 layout)
+.acceptance-row {
+  align-items: center;
+  margin-top: 1rem;
+  direction: rtl;
+
+  .checkbox-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-end: 0;
+    direction: rtl;
+
+    ion-checkbox {
+      margin-left: 0.5rem;
+      --checkbox-background-checked: #337ab7;
+      --border-color-checked: #337ab7;
+    }
+
+    .checkbox-label {
+      direction: rtl;
+      font-size: 1rem;
+      color: #333;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .button-col {
+    display: flex;
+    justify-content: center;
+    
+    .button-container {
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
+
+// Continue Button (matches old round button style)
+.continue-button {
+  --border-radius: 20px;
+  --color: white;
+  --background: #337ab7;
+  --background-hover: #2c5aa0;
+  font-weight: 500;
+  min-height: 36px;
+  font-size: 0.9rem;
+
+  &:disabled {
+    --background: #ccc;
+    --color: #999;
+  }
+}
+
+// Already Accepted State
+.already-accepted-container {
+  text-align: center;
+  padding: 2rem 1rem;
+  direction: rtl;
+
+  .already-accepted-text {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .home-button {
+    --border-radius: 8px;
+    --color: white;
+    --background: #337ab7;
+    --background-hover: #2c5aa0;
+    font-weight: 500;
+  }
+}
+
+// Page-specific responsive adjustments
+@media (max-width: 480px) {
+  .policy-image-container {
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .acceptance-row {
+    margin-top: 0.5rem;
+    
+    .checkbox-item {
+      .checkbox-label {
+        font-size: 0.9rem;
+      }
+    }
+    
+    .continue-button {
+      font-size: 0.8rem;
+      min-height: 32px;
+    }
+  }
+
+  .already-accepted-container {
+    padding: 1.5rem 0.5rem;
+    
+    .already-accepted-text {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Tablet adjustments
+@media (min-width: 768px) {
+  .policy-image-container {
+    .policy-image {
+      max-width: 80%;
+    }
+  }
+  
+  .acceptance-row {
+    max-width: 600px;
+    margin: 2rem auto 0;
+  }
+  
+  .already-accepted-container {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

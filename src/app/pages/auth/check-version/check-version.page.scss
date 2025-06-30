@@ -1,0 +1,121 @@
+// CheckVersion Page Styles
+.content-background {
+  --background: #ebf2fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+
+  ion-spinner {
+    margin-bottom: 1rem;
+    --color: #337ab7;
+    transform: scale(1.5);
+  }
+
+  .loading-text {
+    color: #337ab7;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    direction: rtl;
+  }
+}
+
+// Error Card
+.error-card {
+  margin: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  max-width: 400px;
+  width: 100%;
+
+  .rtl-content {
+    direction: rtl;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .error-title {
+    color: #d32f2f;
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+  }
+
+  .error-message {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+  }
+
+  .retry-button {
+    margin-top: 1.5rem;
+    --border-radius: 8px;
+    --color: white;
+    --background: #337ab7;
+    --background-hover: #2c5aa0;
+    font-weight: 500;
+
+    &:disabled {
+      --background: #ccc;
+    }
+  }
+}
+
+// RTL Alert Styling (Global)
+:global(.rtl-alert) {
+  direction: rtl !important;
+  
+  .alert-message {
+    text-align: right !important;
+    direction: rtl !important;
+  }
+  
+  .alert-button-confirm {
+    font-weight: 500 !important;
+  }
+}
+
+// Responsive Design
+@media (max-width: 480px) {
+  .error-card {
+    margin: 0.5rem;
+    
+    .rtl-content {
+      padding: 1.5rem 1rem;
+    }
+    
+    .error-title {
+      font-size: 1.2rem;
+    }
+    
+    .error-message {
+      font-size: 0.95rem;
+    }
+  }
+  
+  .loading-container {
+    padding: 1.5rem;
+    
+    .loading-text {
+      font-size: 1rem;
+    }
+  }
+}

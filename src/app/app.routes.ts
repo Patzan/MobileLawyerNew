@@ -4,8 +4,17 @@ import { AuthGuard } from './core/guards/auth.guard';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/auth/login',
+    redirectTo: '/check-version',
     pathMatch: 'full',
+  },
+
+  // Version check - first page (no auth required)
+  {
+    path: 'check-version',
+    loadComponent: () =>
+      import('./pages/auth/check-version/check-version.page').then(
+        (m) => m.CheckVersionPage
+      ),
   },
 
   // Authentication routes (no auth required)
@@ -16,6 +25,13 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () =>
           import('./pages/auth/login/login.page').then((m) => m.LoginPage),
+      },
+      {
+        path: 'accept-policy',
+        loadComponent: () =>
+          import('./pages/auth/accept-policy/accept-policy.page').then(
+            (m) => m.AcceptPolicyPage
+          ),
       },
     ],
   },
@@ -30,6 +46,6 @@ export const routes: Routes = [
   // Fallback route
   {
     path: '**',
-    redirectTo: '/auth/login',
+    redirectTo: '/check-version',
   },
 ];

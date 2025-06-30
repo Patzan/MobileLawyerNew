@@ -44,9 +44,13 @@
     "@capacitor/splash-screen": "^7.0.1",
     "@capacitor/status-bar": "^7.0.1",
     "@capacitor/toast": "^7.0.1",
+    "@herdwatch/ngx-ionic-image-viewer": "^2.2.0-dev.0",
     "@ionic/angular": "^8.5.7",
+    "i": "^0.3.7",
     "ionicons": "^7.0.0",
+    "npm": "^11.4.2",
     "rxjs": "~7.8.0",
+    "swiper": "^11.2.10",
     "tslib": "^2.3.0",
     "zone.js": "^0.14.10"
   },

@@ -258,19 +258,20 @@ export class AuthService {
 
       // Call logout API (matching old service)
       if (username) {
-        const logoutUrl = `${environment.baseUrl}LoginService.asmx/LogOut`;
-        const headers = new HttpHeaders({
-          'Content-Type': 'application/json; charset=utf-8',
-          Accept: 'application/json',
-        });
+        const logoutOptions: HttpOptions = {
+          url: `${environment.baseUrl}LoginService.asmx/LogOut`,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            Accept: 'application/json',
+          },
+          data: { username },
+          webFetchExtra: {
+            credentials: 'include' as RequestCredentials,
+          },
+        };
 
         try {
-          await firstValueFrom(
-            this.http.post(logoutUrl, JSON.stringify({ username }), {
-              headers,
-              withCredentials: true,
-            })
-          );
+          await CapacitorHttp.post(logoutOptions);
         } catch (error) {
           // Ignore logout API errors, continue with local cleanup
           this.logService.warn(
@@ -303,19 +304,19 @@ export class AuthService {
    */
   async sendDeviceId(imei: string, iccid: string): Promise<any> {
     try {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json; charset=utf-8',
-        Accept: 'application/json',
-      });
+      const deviceOptions: HttpOptions = {
+        url: `${environment.baseUrl}DeviceIdService.asmx/ApplyDeviceId`,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          Accept: 'application/json',
+        },
+        data: { imei, iccid },
+        webFetchExtra: {
+          credentials: 'include' as RequestCredentials,
+        },
+      };
 
-      const deviceUrl = `${environment.baseUrl}DeviceIdService.asmx/ApplyDeviceId`;
-
-      return await firstValueFrom(
-        this.http.post(deviceUrl, JSON.stringify({ imei, iccid }), {
-          headers,
-          withCredentials: true,
-        })
-      );
+      return await CapacitorHttp.post(deviceOptions);
     } catch (error) {
       this.logService.error(error, 'SendDeviceId error');
       throw error;

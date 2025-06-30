@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar class="textrtl" color="primary">
+    <!-- Show back button only if user already accepted policy -->
+    <ion-buttons slot="start" *ngIf="isAcceptUserPolicyPage()">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="rtl-title">הצהרת פרטיות</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Loading state -->
+  <div *ngIf="isLoading()" class="loading-container">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p class="loading-text">טוען...</p>
+  </div>
+
+  <!-- Main content -->
+  <div *ngIf="!isLoading()">
+    <!-- Privacy Policy Image -->
+    <div class="policy-image-container">
+      <img
+        src="assets/privacypolicy.png"
+        alt="הצהרת פרטיות"
+        #policyImage
+        (click)="presentImage()"
+        (error)="onImageError($event)"
+        class="policy-image"
+      />
+    </div>
+
+    <!-- Acceptance Section - Only show if user hasn't accepted yet -->
+    <ion-row *ngIf="!isAcceptUserPolicyPage()" class="acceptance-row">
+      <!-- Checkbox Column -->
+      <ion-col size="8">
+        <ion-list>
+          <ion-item lines="none" class="checkbox-item">
+            <ion-checkbox
+              slot="start"
+              [checked]="accept()"
+              (ionChange)="onCheckboxChange($event)"
+            >
+            </ion-checkbox>
+            <ion-label class="checkbox-label"> אשר את התקנון </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <!-- Continue Button Column -->
+      <ion-col size="3" class="button-col">
+        <div class="button-container">
+          <ion-button
+            shape="round"
+            [disabled]="isContinueDisabled"
+            (click)="goToHomePage()"
+            class="continue-button"
+          >
+            {{ continueButtonText }}
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!-- If user already accepted, show message or direct access -->
+    <div *ngIf="isAcceptUserPolicyPage()" class="already-accepted-container">
+      <p class="already-accepted-text">
+        התקנון כבר אושר. ניתן לחזור לעמוד הבית.
+      </p>
+      <ion-button expand="block" (click)="goToHomePage()" class="home-button">
+        חזור לעמוד הבית
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

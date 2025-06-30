@@ -1,0 +1,40 @@
+<ion-content class="ion-padding content-background">
+  <!-- Loading State -->
+  <div
+    *ngIf="isLoading && !showConnectionError && !showIncompatibleAlert"
+    class="loading-container"
+  >
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p class="loading-text">בודק תאימות גרסאות...</p>
+  </div>
+
+  <!-- Connection Error State -->
+  <ion-card *ngIf="showConnectionError" class="error-card">
+    <ion-card-content class="rtl-content">
+      <div class="error-icon">⚠️</div>
+      <h2 class="error-title">שגיאה בקבלת נתונים מהשרת</h2>
+      <p class="error-message">
+        לא ניתן להתחבר לשרת. בדוק את החיבור לאינטרנט ונסה שוב.
+      </p>
+
+      <ion-button
+        expand="block"
+        (click)="retryVersionCheck()"
+        [disabled]="isCheckingVersion"
+        class="retry-button"
+      >
+        {{ isCheckingVersion ? 'בודק...' : 'נסה להתחבר שנית' }}
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Version Incompatible State -->
+  <ion-card *ngIf="showIncompatibleAlert" class="error-card">
+    <ion-card-content class="rtl-content">
+      <div class="error-icon">🔄</div>
+      <h2 class="error-title">עדכון נדרש</h2>
+      <p class="error-message">קיימת גרסת תוכנה חדשה.</p>
+      <p class="error-message">עליך לבצע תחילה עדכון תוכנה.</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
