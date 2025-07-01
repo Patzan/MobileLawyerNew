@@ -9,13 +9,14 @@ import {
   IonSpinner,
   AlertController,
   LoadingController,
+  IonHeader,
 } from '@ionic/angular/standalone';
 
 import {
   DataService,
   VersionCheckResponse,
 } from '../../../core/services/data.service';
-import { PolicyService } from '../../../core/services/policy.service';
+
 import { LogService } from '../../../core/services/log.service';
 import { environment } from '../../../../environments/environment';
 
@@ -31,12 +32,12 @@ import { environment } from '../../../../environments/environment';
     IonCardContent,
     IonButton,
     IonSpinner,
+    IonHeader,
   ],
 })
 export class CheckVersionPage implements OnInit {
   // Inject services
   private dataService = inject(DataService);
-  private policyService = inject(PolicyService);
   private logService = inject(LogService);
   private router = inject(Router);
   private alertController = inject(AlertController);
@@ -105,7 +106,6 @@ export class CheckVersionPage implements OnInit {
 
       // Show connection error
       this.showConnectionError = true;
-      await this.showConnectionErrorAlert(error);
     } finally {
       this.isLoading = false;
       this.isCheckingVersion = false;
@@ -117,20 +117,8 @@ export class CheckVersionPage implements OnInit {
    */
   private async navigateToNextPage(): Promise<void> {
     try {
-      // Check if user has accepted policy
-      const hasAcceptedPolicy = await this.policyService.ifAcceptedUserPolicy();
-
-      if (hasAcceptedPolicy) {
-        // Policy accepted - go to home page
-        this.logService.info('User policy accepted - navigating to home');
-        this.router.navigate(['/home'], { replaceUrl: true });
-      } else {
-        // Policy not accepted - go to policy page
-        this.logService.info(
-          'User policy not accepted - navigating to policy page'
-        );
-        this.router.navigate(['/auth/accept-policy'], { replaceUrl: true });
-      }
+      this.logService.info('Version check passed - navigating to login');
+      this.router.navigate(['/auth/login'], { replaceUrl: true });
     } catch (error: any) {
       this.logService.error(error, 'Navigation failed');
       // Fallback to login page
@@ -150,38 +138,6 @@ export class CheckVersionPage implements OnInit {
         {
           text: 'אישור',
           cssClass: 'alert-button-confirm',
-        },
-      ],
-      backdropDismiss: false,
-    });
-
-    await alert.present();
-  }
-
-  /**
-   * Show connection error alert
-   */
-  private async showConnectionErrorAlert(error: any): Promise<void> {
-    let message = 'שגיאה בקבלת נתונים מהשרת';
-
-    // Customize message based on error type
-    if (error.message === 'NETWORK_ERROR') {
-      message = 'בעיית רשת. בדוק את החיבור לאינטרנט ונסה שוב.';
-    } else if (error.message === 'SERVER_ERROR') {
-      message = 'שגיאת שרת. נסה שוב מאוחר יותר.';
-    }
-
-    const alert = await this.alertController.create({
-      header: 'שגיאת חיבור',
-      message,
-      cssClass: 'rtl-alert',
-      buttons: [
-        {
-          text: 'נסה שוב',
-          cssClass: 'alert-button-confirm',
-          handler: () => {
-            this.retryVersionCheck();
-          },
         },
       ],
       backdropDismiss: false,

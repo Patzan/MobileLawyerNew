@@ -27,7 +27,7 @@ import { eye, eyeOff } from 'ionicons/icons';
 
 // Capacitor imports
 import { PushNotifications } from '@capacitor/push-notifications';
-import { Device } from '@capacitor/device';
+import { PolicyService } from '../../../core/services/policy.service';
 
 // Services
 import {
@@ -67,7 +67,7 @@ export class LoginPage implements OnInit {
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
   private platform = inject(Platform);
-  private apiTestService = inject(ApiTestService); // Добавить этот импорт
+  private policyService = inject(PolicyService);
 
   // Reactive form
   loginForm!: FormGroup;
@@ -231,7 +231,8 @@ export class LoginPage implements OnInit {
         this.logService.setUser(credentials.username);
 
         // Navigate to home page
-        this.router.navigate(['/home']);
+        //this.router.navigate(['/home']);
+        await this.navigateAfterSuccessfulLogin();
 
         this.logService.info('Login successful, navigating to home');
       } else {
@@ -273,6 +274,32 @@ export class LoginPage implements OnInit {
       }
     } finally {
       this.isLoading.set(false);
+    }
+  }
+
+  /**
+   * Navigate after successful login based on policy acceptance
+   */
+  private async navigateAfterSuccessfulLogin(): Promise<void> {
+    try {
+      // Check if user has accepted policy
+      const hasAcceptedPolicy = await this.policyService.ifAcceptedUserPolicy();
+
+      if (hasAcceptedPolicy) {
+        // Policy accepted - go to home page
+        this.logService.info('User policy accepted - navigating to home');
+        this.router.navigate(['/home'], { replaceUrl: true });
+      } else {
+        // Policy not accepted - go to policy page
+        this.logService.info(
+          'User policy not accepted - navigating to policy page'
+        );
+        this.router.navigate(['/auth/accept-policy'], { replaceUrl: true });
+      }
+    } catch (error: any) {
+      this.logService.error(error, 'Navigation after login failed');
+      // Fallback to policy page
+      this.router.navigate(['/auth/accept-policy'], { replaceUrl: true });
     }
   }
 
