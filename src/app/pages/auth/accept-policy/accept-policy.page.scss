@@ -1,30 +1,6 @@
-// AcceptUserPolicy Page Styles (after moving global styles to global.scss)
+// Loading state - uses global .loading-container class
 
-// Page-specific styles only - global header/content styles moved to global.scss
-
-// Loading State
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  min-height: 200px;
-
-  ion-spinner {
-    margin-bottom: 1rem;
-    --color: #337ab7;
-    transform: scale(1.2);
-  }
-
-  .loading-text {
-    color: #337ab7;
-    font-size: 1rem;
-    direction: rtl;
-  }
-}
-
-// Privacy Policy Image
+// Privacy Policy Image - AcceptPolicy specific
 .policy-image-container {
   text-align: center;
   margin-bottom: 2rem;
@@ -48,7 +24,7 @@
   }
 }
 
-// Acceptance Row (matches old col-8 + col-3 layout)
+// Acceptance Row - AcceptPolicy specific layout
 .acceptance-row {
   align-items: center;
   margin-top: 1rem;
@@ -62,8 +38,8 @@
 
     ion-checkbox {
       margin-left: 0.5rem;
-      --checkbox-background-checked: #337ab7;
-      --border-color-checked: #337ab7;
+      --checkbox-background-checked: var(--app-primary-blue);
+      --border-color-checked: var(--app-primary-blue);
     }
 
     .checkbox-label {
@@ -85,12 +61,12 @@
   }
 }
 
-// Continue Button (matches old round button style)
+// Continue Button - use global button styles
 .continue-button {
   --border-radius: 20px;
   --color: white;
-  --background: #337ab7;
-  --background-hover: #2c5aa0;
+  --background: var(--app-primary-blue);
+  --background-hover: var(--app-primary-blue-hover);
   font-weight: 500;
   min-height: 36px;
   font-size: 0.9rem;
@@ -101,7 +77,7 @@
   }
 }
 
-// Already Accepted State
+// Already Accepted State - AcceptPolicy specific
 .already-accepted-container {
   text-align: center;
   padding: 2rem 1rem;
@@ -109,21 +85,27 @@
 
   .already-accepted-text {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--app-text-muted);
     margin-bottom: 1.5rem;
     line-height: 1.5;
   }
 
   .home-button {
+    // Use global button styles
     --border-radius: 8px;
     --color: white;
-    --background: #337ab7;
-    --background-hover: #2c5aa0;
+    --background: var(--app-primary-blue);
+    --background-hover: var(--app-primary-blue-hover);
     font-weight: 500;
+
+    &:disabled {
+      --background: #ccc;
+      --color: #999;
+    }
   }
 }
 
-// Page-specific responsive adjustments
+// Page-specific responsive adjustments only
 @media (max-width: 480px) {
   .policy-image-container {
     padding: 0.5rem;
@@ -138,11 +120,6 @@
         font-size: 0.9rem;
       }
     }
-    
-    .continue-button {
-      font-size: 0.8rem;
-      min-height: 32px;
-    }
   }
 
   .already-accepted-container {
@@ -154,7 +131,7 @@
   }
 }
 
-// Tablet adjustments
+// Tablet adjustments - AcceptPolicy specific
 @media (min-width: 768px) {
   .policy-image-container {
     .policy-image {

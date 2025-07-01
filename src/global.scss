@@ -36,21 +36,30 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-// Modern Image Viewer Global Styles (replaces old image-viewer-modal)
-.ion-img-viewer {
-  --background: rgba(0, 0, 0, 0.95);
+/* ========================================
+   GLOBAL BRAND COLORS & VARIABLES
+   ======================================== */
+
+:root {
+  // Primary brand color (used across all pages)
+  --app-primary-blue: #337ab7;
+  --app-primary-blue-hover: #2c5aa0;
+  --app-primary-blue-light: #5B9BD5;
+  --app-primary-blue-dark: #2E5F8A;
   
-  .modal-wrapper {
-    background: rgba(0, 0, 0, 0.95);
-  }
+  // Background colors
+  --app-background-light: #e8e8e8;
+  --app-background-blue: #ebf2fa;
+  --app-background-dark: #1a1a1a;
   
-  // Ensure proper RTL support for image viewer
-  ion-toolbar {
-    ion-title {
-      direction: rtl;
-      text-align: center;
-    }
-  }
+  // Text colors
+  --app-text-error: #d32f2f;
+  --app-text-muted: #666;
+  --app-text-light: #E8F4FD;
+  
+  // Form colors
+  --app-input-background: #B8D4F0;
+  --app-input-background-dark: #7BB3E8;
 }
 
 /* ========================================
@@ -59,8 +68,7 @@
 
 // Global Header Safe Area Support - Prevents taskbar/status bar overlap
 ion-header {
-  // Ensure all headers respect device safe areas
-  //padding-top: env(safe-area-inset-top, 0px);
+  // FIXED: Use proven solution from LoginPage
   margin: max(50px, env(safe-area-inset-top) + 10px) auto 0 auto;
   
   ion-toolbar {
@@ -97,6 +105,190 @@ ion-content {
 }
 
 /* ========================================
+   COMMON BACKGROUND CLASSES
+   ======================================== */
+
+.content-background-light {
+  --background: var(--app-background-light);
+}
+
+.content-background-blue {
+  --background: var(--app-background-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* ========================================
+   COMMON UI COMPONENTS CLASSES
+   ======================================== */
+
+// Loading State Component (used in CheckVersion, AcceptPolicy)
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  min-height: 200px;
+
+  ion-spinner {
+    margin-bottom: 1rem;
+    --color: var(--app-primary-blue);
+    transform: scale(1.2);
+  }
+
+  .loading-text {
+    color: var(--app-primary-blue);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0;
+    direction: rtl;
+  }
+}
+
+// Error Card Component (used in CheckVersion)
+.error-card {
+  margin: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: none;
+  max-width: 400px;
+  width: 100%;
+
+  .rtl-content {
+    direction: rtl;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .error-title {
+    color: var(--app-text-error);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+  }
+
+  .error-message {
+    color: var(--app-text-muted);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0.5rem 0;
+  }
+
+  .retry-button {
+    margin-top: 1.5rem;
+    --border-radius: 8px;
+    --color: white;
+    --background: var(--app-primary-blue);
+    --background-hover: var(--app-primary-blue-hover);
+    font-weight: 500;
+
+    &:disabled {
+      --background: #ccc;
+    }
+  }
+}
+
+// Form Card Component (used in Login)
+.form-card-base {
+  width: calc(100% - 40px);
+  max-width: none;
+  min-width: 280px;
+  margin: 0 auto;
+  background: var(--app-primary-blue-light);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  // Safe area margin (proven solution)
+  margin: env(safe-area-inset-top) 20px 20px;
+
+  ion-card-header {
+    text-align: center;
+    padding: 16px 16px 12px;
+    background: var(--app-primary-blue-light);
+  }
+  
+  ion-card-content {
+    padding: 12px 16px 16px;
+    background: var(--app-primary-blue-light);
+  }
+}
+
+// Common Button Styles
+.button-primary {
+  --border-radius: 8px;
+  --color: white;
+  --background: var(--app-primary-blue);
+  --background-hover: var(--app-primary-blue-hover);
+  font-weight: 500;
+
+  &:disabled {
+    --background: #ccc;
+    --color: #999;
+  }
+}
+
+.button-round {
+  --border-radius: 20px;
+  --color: white;
+  --background: var(--app-primary-blue);
+  --background-hover: var(--app-primary-blue-hover);
+  font-weight: 500;
+  min-height: 36px;
+  font-size: 0.9rem;
+
+  &:disabled {
+    --background: #ccc;
+    --color: #999;
+  }
+}
+
+// Common Input Styles
+.input-field-base {
+  --background: var(--app-input-background);
+  --border-color: transparent;
+  --border-width: 0;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --inner-padding-end: 12px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  min-height: 40px;
+  
+  ion-input {
+    --placeholder-color: rgba(0, 0, 0, 0.5);
+    --color: #333;
+    font-size: 14px;
+    direction: rtl;
+    text-align: right;
+    
+    &::placeholder {
+      text-align: right;
+      direction: rtl;
+      font-size: 14px;
+    }
+  }
+}
+
+// Card title class
+.card-title-base {
+  font-size: 16px;
+  font-weight: normal;
+  color: white;
+  margin: 0;
+  direction: rtl;
+  text-align: center;
+}
+
+/* ========================================
    RESPONSIVE ADJUSTMENTS
    ======================================== */
 
@@ -108,7 +300,7 @@ ion-content {
       --min-height: calc(64px + env(safe-area-inset-top, 0px));
       
       ion-title {
-        font-size: 1.1rem; // Slightly smaller on mobile
+        font-size: 1.1rem;
       }
     }
   }
@@ -116,6 +308,40 @@ ion-content {
   ion-content {
     // Adjust content offset for larger mobile header
     --offset-top: calc(64px + env(safe-area-inset-top, 0px));
+  }
+  
+  // Mobile form adjustments
+  .form-card-base {
+    width: calc(100% - 20px);
+    min-width: 260px;
+    // Apply proven mobile safe area solution
+    margin: max(50px, env(safe-area-inset-top) + 10px) auto 0 auto;
+  }
+  
+  // Mobile error card adjustments
+  .error-card {
+    margin: 0.5rem;
+    
+    .rtl-content {
+      padding: 1.5rem 1rem;
+    }
+    
+    .error-title {
+      font-size: 1.2rem;
+    }
+    
+    .error-message {
+      font-size: 0.95rem;
+    }
+  }
+  
+  // Mobile loading adjustments
+  .loading-container {
+    padding: 1.5rem;
+    
+    .loading-text {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -126,7 +352,7 @@ ion-content {
       --min-height: calc(64px + env(safe-area-inset-top, 0px));
       
       ion-title {
-        font-size: 1.25rem; // Larger on tablets
+        font-size: 1.25rem;
       }
     }
   }
@@ -147,6 +373,11 @@ ion-content {
   
   ion-content {
     --offset-top: calc(48px + env(safe-area-inset-top, 0px));
+  }
+  
+  // Landscape form adjustments (proven solution)
+  .form-card-base {
+    margin: max(30px, env(safe-area-inset-top) + 10px) auto 0 auto;
   }
 }
 
@@ -180,10 +411,18 @@ ion-content {
 }
 
 /* ========================================
-   DARK MODE SAFE AREA SUPPORT
+   DARK MODE SUPPORT
    ======================================== */
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    // Override colors for dark mode
+    --app-background-light: var(--app-background-dark);
+    --app-primary-blue-light: var(--app-primary-blue-dark);
+    --app-input-background: var(--app-input-background-dark);
+    --app-text-muted: #ccc;
+  }
+  
   ion-header {
     ion-toolbar {
       // Ensure dark mode headers still respect safe areas
@@ -196,6 +435,32 @@ ion-content {
       ion-buttons {
         padding-top: env(safe-area-inset-top, 0px);
       }
+    }
+  }
+  
+  // Form adjustments for dark mode (proven solution)
+  .form-card-base {
+    background: var(--app-primary-blue-dark);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    // Same safe area padding for dark mode
+    margin: max(60px, env(safe-area-inset-top) + 20px) auto 0 auto;
+    
+    ion-card-header {
+      background: var(--app-primary-blue-dark);
+    }
+    
+    ion-card-content {
+      background: var(--app-primary-blue-dark);
+    }
+  }
+  
+  // Input field dark mode
+  .input-field-base {
+    --background: var(--app-input-background-dark);
+    
+    ion-input {
+      --placeholder-color: rgba(0, 0, 0, 0.7);
+      --color: #1a1a1a;
     }
   }
 }
@@ -225,4 +490,25 @@ ion-content {
   padding-bottom: env(safe-area-inset-bottom, 0px);
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* ========================================
+   IMAGE VIEWER MODAL STYLES
+   ======================================== */
+
+// Modern Image Viewer Global Styles (replaces old image-viewer-modal)
+.ion-img-viewer {
+  --background: rgba(0, 0, 0, 0.95);
+  
+  .modal-wrapper {
+    background: rgba(0, 0, 0, 0.95);
+  }
+  
+  // Ensure proper RTL support for image viewer
+  ion-toolbar {
+    ion-title {
+      direction: rtl;
+      text-align: center;
+    }
+  }
 }
