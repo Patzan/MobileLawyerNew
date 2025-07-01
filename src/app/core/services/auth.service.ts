@@ -43,6 +43,7 @@ export class AuthService {
   // Modern Angular signals for reactive state management
   private readonly isAuthenticated = signal(false);
   private readonly currentUser = signal<UserInfo | null>(null);
+  private readonly initializationComplete = signal(false);
 
   // Legacy BehaviorSubject for compatibility
   private authState$ = new BehaviorSubject<boolean>(false);
@@ -90,6 +91,8 @@ export class AuthService {
    */
   private async initializeAuthState(): Promise<void> {
     try {
+      this.logService.info('Initializing authentication state...');
+
       const isAuth = await Preferences.get({
         key: this.STORAGE_KEYS.IS_AUTHENTICATED,
       });
@@ -100,19 +103,95 @@ export class AuthService {
         key: this.STORAGE_KEYS.LOGIN_TIME,
       });
 
-      if (isAuth.value === 'true' && username.value) {
-        const userInfo: UserInfo = {
-          username: username.value,
-          loginTime: loginTime.value || new Date().toISOString(),
-        };
+      this.logService.debug('Retrieved auth data from storage', {
+        isAuth: isAuth.value,
+        username: username.value,
+        loginTime: loginTime.value,
+      });
 
-        this.setAuthenticationState(true, userInfo);
-        this.logService.info('Authentication state restored from storage');
+      if (isAuth.value === 'true' && username.value && loginTime.value) {
+        // Check only local session timeout (no server call)
+        if (!this.isSessionExpiredLocally(loginTime.value)) {
+          const userInfo: UserInfo = {
+            username: username.value,
+            loginTime: loginTime.value,
+          };
+
+          this.setAuthenticationState(true, userInfo);
+          this.logService.info(
+            'Authentication state restored from storage',
+            userInfo
+          );
+        } else {
+          this.logService.warn(
+            'Local session expired - clearing authentication data'
+          );
+          await this.clearAuthenticationData();
+        }
+      } else {
+        this.logService.info('No valid authentication data found');
       }
     } catch (error) {
       this.logService.error(error, 'Failed to initialize auth state');
       await this.clearAuthenticationData();
+    } finally {
+      this.initializationComplete.set(true);
+      this.logService.info('Authentication initialization completed');
     }
+  }
+
+  /**
+   * Check if local session is expired
+   */
+  private isSessionExpiredLocally(loginTime: string): boolean {
+    try {
+      const loginDate = new Date(loginTime);
+      const now = new Date();
+      const diffInHours =
+        (now.getTime() - loginDate.getTime()) / (1000 * 60 * 60);
+
+      // Local session timeout - 24 hours
+      const localSessionTimeoutHours = 24;
+
+      if (diffInHours > localSessionTimeoutHours) {
+        this.logService.info(
+          `Local session timeout: ${diffInHours.toFixed(1)} hours since login`
+        );
+        return true;
+      }
+
+      return false;
+    } catch (error) {
+      this.logService.error(error, 'Error checking local session expiration');
+      return true; // Consider expired on error
+    }
+  }
+
+  /**
+   * Get initialization status signal
+   */
+  get isInitialized() {
+    return this.initializationComplete.asReadonly();
+  }
+
+  /**
+   * Wait for initialization to complete
+   */
+  async waitForInitialization(): Promise<void> {
+    return new Promise((resolve) => {
+      if (this.initializationComplete()) {
+        resolve();
+        return;
+      }
+
+      // Wait for initialization to complete
+      const checkInterval = setInterval(() => {
+        if (this.initializationComplete()) {
+          clearInterval(checkInterval);
+          resolve();
+        }
+      }, 50);
+    });
   }
 
   /**
@@ -355,12 +434,20 @@ export class AuthService {
     ]);
   }
 
-  private async clearAuthenticationData(): Promise<void> {
-    await Promise.all([
-      Preferences.remove({ key: this.STORAGE_KEYS.USERNAME }),
-      Preferences.remove({ key: this.STORAGE_KEYS.LOGIN_TIME }),
-      Preferences.remove({ key: this.STORAGE_KEYS.IS_AUTHENTICATED }),
-    ]);
+  public async clearAuthenticationData(): Promise<void> {
+    try {
+      await Promise.all([
+        Preferences.remove({ key: this.STORAGE_KEYS.USERNAME }),
+        Preferences.remove({ key: this.STORAGE_KEYS.LOGIN_TIME }),
+        Preferences.remove({ key: this.STORAGE_KEYS.IS_AUTHENTICATED }),
+      ]);
+
+      // Update state
+      this.setAuthenticationState(false, null);
+      this.logService.info('Authentication data cleared');
+    } catch (error) {
+      this.logService.error(error, 'Failed to clear authentication data');
+    }
   }
 
   private async showToast(

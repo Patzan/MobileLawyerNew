@@ -35,8 +35,6 @@ import {
   LoginCredentials,
 } from '../../../core/services/auth.service';
 import { LogService } from '../../../core/services/log.service';
-import { environment } from '../../../../environments/environment';
-import { ApiTestService } from 'src/app/core/services/api-test.service';
 
 @Component({
   selector: 'app-login',
